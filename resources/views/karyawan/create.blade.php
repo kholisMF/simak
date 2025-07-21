@@ -428,7 +428,10 @@
                     }
                     );
                     
-                    $('.select2-container--open .select2-search__field').focus();
+                    let searchInput = document.querySelector('.select2-container--open .select2-search__field');
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
                 }, 10);
             });
             
@@ -572,6 +575,76 @@
                 });
             });
         }
+
+
+        function addNewData(selector, placeholder, url = null) {
+            $(selector).select2({
+                dropdownParent: $('body'),
+                width: '100%',
+                placeholder: placeholder,
+                allowClear: true,
+                templateResult: formatOption,
+                templateSelection: formatOption
+            }).on('select2:open', function (e) {
+                setTimeout(() => {
+                    $('.select2-search__field').focus();
+                    
+                    if (!$('.select2-add-option').length) {
+                        const dropdown = $('.select2-container--open .select2-dropdown');
+                        dropdown.append(`
+                            <div class="select2-add-option">
+                                <i class="fas fa-plus"></i> Tambah Baru
+                            </div>
+                        `);
+                        
+                        dropdown.on('click', '.select2-add-option', function() {
+                            $(this).replaceWith(`
+                                <div class="select2-add-input">
+                                    <input type="text" placeholder="Tambah ${placeholder} baru">
+                                    <button class="btn btn-sm btn-success save-new-option">
+                                        <i class="fas fa-save"></i> Submit
+                                    </button>
+                                </div>
+                            `);
+                            
+                            $('.select2-add-input input').focus();
+                        });
+                        
+                        dropdown.on('click', '.save-new-option', async function() {
+                            const newValue = $('.select2-add-input input').val().trim();
+                            if (newValue) {
+                                if (url) {
+                                    try {
+                                        const response = await $.post(url, { name: newValue });
+                                        if (response.success) {
+                                            const newOption = new Option(newValue, response.id, true, true);
+                                            $(selector).append(newOption).trigger('change');
+                                        }
+                                    } catch (error) {
+                                        console.error('Error saving:', error);
+                                    }
+                                } else {
+                                    const newOption = new Option(newValue, newValue, true, true);
+                                    $(selector).append(newOption).trigger('change');
+                                }
+                            }
+                            
+                            $(selector).select2('close');
+                        });
+                    }
+                }, 10);
+            });
+        }
+
+        function formatOption(option) {
+            if (!option.id) return option.text;
+            return $(`<span>${option.text}</span>`);
+        }
+
+        addNewData('#kecamatan', 'Kecamatan', '/api/kecamatan/add');
+        addNewData('#kelurahan', 'Kelurahan', '/api/kelurahan/add');
+        addNewData('#kecamatan_dom', 'Kecamatan', '/api/kecamatan/add');
+        addNewData('#kelurahan_dom', 'Kelurahan', '/api/kelurahan/add');
     </script>
 
 @endpush

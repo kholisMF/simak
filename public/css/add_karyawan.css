@@ -113,3 +113,36 @@
   height: 36px;
   right: 10px;
 }
+
+.select2-add-option {
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-top: 1px solid #eb2f04;
+    background: rgba(18, 240, 133, 0.572);
+    color: #656565;
+    font-weight: 600;
+}
+
+.select2-add-option i {
+    margin-right: 8px;
+    color: #ff0707;
+    font-weight: 800;
+}
+
+.select2-add-input {
+    padding: 6px 12px;
+    border-top: 1px solid #eee;
+}
+
+.select2-add-input input {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 5px;
+}
+
+.select2-add-input button {
+    padding: 4px 8px;
+    font-size: 12px;
+}
