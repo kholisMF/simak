@@ -520,22 +520,28 @@
             }
         });
 
-        $('#checkboxAlamatDom').on('change', function () {
+        $('#checkboxAlamatDom').on('change', async function () {
             if ($(this).is(':checked')) {
                 $('#provinsi_dom').val($('#provinsi').val()).trigger('change');
-
-                setTimeout(function () {
+                await antriData('#kab_kota_dom');
+                if ($('#kab_kota').val()) {
                     $('#kab_kota_dom').val($('#kab_kota').val()).trigger('change');
-                }, 500);
 
-                setTimeout(function () {
-                    $('#kecamatan_dom').val($('#kecamatan').val()).trigger('change');
-                }, 1000);
-
-                setTimeout(function () {
-                    $('#kelurahan_dom').val($('#kelurahan').val()).trigger('change');
-                }, 1500);
-
+                    await antriData('#kecamatan_dom');
+                    if ($('#kecamatan').val()) {
+                        $('#kecamatan_dom').val($('#kecamatan').val()).trigger('change');
+                        
+                        await antriData('#kelurahan_dom');
+                        if ($('#kelurahan').val()) {
+                            $('#kelurahan_dom').val($('#kelurahan').val()).trigger('change');
+                            
+                            setTimeout(() => {
+                                $('#kelurahan_dom').trigger('change.select2');
+                            }, 100);
+                        }
+                    }
+                }
+                
                 $('#alamat_dom').val($('#alamat').val());
             } else {
                 $('#provinsi_dom').val('').trigger('change');
@@ -546,34 +552,26 @@
             }
         });
 
-        // $('#checkboxAlamatDom').on('change', function () {
-        //     if ($(this).is(':checked')) {
-        //         $('#provinsi_dom').val($('#provinsi').val()).trigger('change');
-        //         $('#provinsi_dom').one('select2:select', function () {
-        //             setTimeout(function () {
-        //                 $('#kab_kota_dom').val($('#kab_kota').val()).trigger('change');
-        //             }, 300);
-        //         });
-        //         $('#kab_kota_dom').one('select2:select', function () {
-        //             setTimeout(function () {
-        //                 $('#kecamatan_dom').val($('#kecamatan').val()).trigger('change');
-        //             }, 300);
-        //         });
-        //         $('#kecamatan_dom').one('select2:select', function () {
-        //             setTimeout(function () {
-        //                 $('#kelurahan_dom').val($('#kelurahan').val()).trigger('change');
-        //             }, 300);
-        //         });
-        //         $('#alamat_dom').val($('#alamat').val());
-
-        //     } else {
-        //         $('#provinsi_dom').val('').trigger('change');
-        //         $('#kab_kota_dom').val('').trigger('change');
-        //         $('#kecamatan_dom').val('').trigger('change');
-        //         $('#kelurahan_dom').val('').trigger('change');
-        //         $('#alamat_dom').val('');
-        //     }
-        // });
+        function antriData(selector) {
+            return new Promise(resolve => {
+                const select = $(selector);
+                if (!select.prop('disabled')) {
+                    return resolve();
+                }
+                
+                const observer = new MutationObserver(() => {
+                    if (!select.prop('disabled')) {
+                        observer.disconnect();
+                        resolve();
+                    }
+                });
+                
+                observer.observe(select[0], {
+                    attributes: true,
+                    attributeFilter: ['disabled']
+                });
+            });
+        }
     </script>
 
 @endpush
