@@ -7,6 +7,10 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KonfigurationController;
 
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
