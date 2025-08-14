@@ -57,7 +57,8 @@ class Karyawan extends Model
         return DB::table('mt_kelurahan')
             ->where('id_kecamatan', $idKecamatan)
             ->orderBy('nama_kelurahan')
-            ->pluck('nama_kelurahan', 'id_kelurahan');
+            // ->pluck('nama_kelurahan', 'id_kelurahan'); // ini jika pakai master wilayah _old
+            ->pluck('nama_kelurahan'); // ini pakai yang saat ini, masalahnya datanya pada id_kelurahan belum sesuai
     }
     // =========================================== GET WILAYAH ============================================== \\
 }
