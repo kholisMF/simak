@@ -372,10 +372,49 @@
                 </div>
                 <div class="tab-pane" id="tab-6">
                     <div class="card p-4">
-                        <div class="mb-3">
-                            <label>Kontak Darurat</label>
-                            <input type="text" name="kelurahan" class="form-control required-input">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label>Nama</label>
+                                <input type="text" name="nama_kontak_darurat" id="nama_kontak_darurat" class="form-control required-input kondar-field">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Hubungan</label>
+                                <input type="text" name="hubungan_kontak_darurat" id="hubungan_kontak_darurat" class="form-control required-input kondar-field">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Alamat</label>
+                                <input type="text" name="alamat_kontak_darurat" id="alamat_kontak_darurat" class="form-control required-input kondar-field">
+                            </div>
+                            <div class="col-md-3">
+                                <label>No. Hp</label>
+                                <input type="text" name="no_kontak_darurat" id="no_kontak_darurat" class="form-control required-input kondar-field">
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="addKondarBtn" class="btn btn-primary btn-sm" style="display:none;">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3" id="kondarTableContainer" style="display: none;">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="kondarTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>Hubungan</th>
+                                            <th>Alamat</th>
+                                            <th>No. Hp</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <input type="hidden" name="kondar_list" id="kondar_list">
                     </div>
                 </div>
                 <div class="tab-pane" id="tab-7">
@@ -966,6 +1005,65 @@
 
             if (pengalamanData.length === 0) {
                 $('#pengalamanTableContainer').hide();
+            }
+        });
+
+        // ================================================================= KONTAK DARURAT ========================================================== \\
+
+        let kondarData = [];
+
+        $('.kondar-field').on('input change', function() {
+            let allFilled = true;
+            $('.kondar-field').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                $('#addKondarBtn').show();
+            } else {
+                $('#addKondarBtn').hide();
+            }
+        });
+
+        $('#addKondarBtn').click(function() {
+            let nama_kontak_darurat = $('#nama_kontak_darurat').val().trim();
+            let hubungan_kontak_darurat = $('#hubungan_kontak_darurat').val().trim();
+            let alamat_kontak_darurat = $('#alamat_kontak_darurat').val().trim();
+            let no_kontak_darurat = $('#no_kontak_darurat').val().trim();
+
+            let rowData = { nama_kontak_darurat, hubungan_kontak_darurat, alamat_kontak_darurat, no_kontak_darurat };
+            kondarData.push(rowData);
+
+            $('#kondar_list').val(JSON.stringify(kondarData));
+
+            $('#kondarTableContainer').show();
+
+            $('#kondarTable tbody').append(`
+                <tr>
+                    <td>${nama_kontak_darurat}</td>
+                    <td>${hubungan_kontak_darurat}</td>
+                    <td>${alamat_kontak_darurat}</td>
+                    <td>${no_kontak_darurat}</td>
+                    <td><i class="fa-solid fa-delete-left btn-delete-kondar text-danger" title="Delete" style="cursor:pointer;"></i></td>
+                </tr>
+            `);
+
+            $('.kondar-field').val('');
+            $('#addKondarBtn').hide();
+        });
+
+        $(document).on('click', '.btn-delete-kondar', function() {
+            let rowIndex = $(this).closest('tr').index();
+            kondarData.splice(rowIndex, 1);
+
+            $('#kondar_list').val(JSON.stringify(kondarData));
+
+            $(this).closest('tr').remove();
+
+            if (kondarData.length === 0) {
+                $('#kondarTableContainer').hide();
             }
         });
     </script>
