@@ -196,55 +196,178 @@
                 </div>
                 <div class="tab-pane" id="tab-3">
                     <div class="card p-4">
-                        <div class=" row mb-3">
+                        <div class="row mb-3">
                             <div class="col-md-3">
                                 <label>Nama Sekolah</label>
-                                <input type="text" name="nama_sekolah" class="form-control required-input">
+                                <input type="text" id="nama_sekolah" name="nama_sekolah" class="form-control required-input pendidikan-field">
                             </div>
                             <div class="col-md-3">
                                 <label>Jurusan</label>
-                                <input type="text" name="jurusan" class="form-control required-input">
+                                <input type="text" id="jurusan" name="jurusan" class="form-control required-input pendidikan-field">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label>Periode</label>
-                                <input type="text" name="periode" class="form-control required-input">
+                                <div class="input-group">
+                                    <div class="col-md-6">
+                                        <input type="month" id="periode_awal" name="periode_awal" class="form-control required-input pendidikan-field">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="month" id="periode_akhir" name="periode_akhir" class="form-control required-input pendidikan-field">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Berijazah</label>
-                                <input type="text" name="berijazah" class="form-control required-input">
+                                <select id="berijazah" name="berijazah" class="form-control required-input pendidikan-field">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="YA">YA</option>
+                                    <option value="TIDAK">TIDAK</option>
+                                </select>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="addPendidikanBtn" class="btn btn-primary btn-sm" style="display:none;">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3" id="pendidikanTableContainer" style="display: none;">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="pendidikanTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Sekolah</th>
+                                            <th>Jurusan</th>
+                                            <th>Periode</th>
+                                            <th>Berijazah</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <input type="hidden" name="pendidikan_list" id="pendidikan_list">
                     </div>
                 </div>
                 <div class="tab-pane" id="tab-4">
                     <div class="card p-4">
-                        <p style="font-size: 8pt; color:brown;">*) <i>Cantumkan susunan anggota keluarga termasuk diri anda.</i></p>
                         <div class=" row mb-3">
                             <div class="col-md-3">
                                 <label>Nama Keluarga</label>
-                                <input type="text" name="nama_keluarga" class="form-control required-input">
+                                <input type="text" name="nama_keluarga" id="nama_keluarga" class="form-control required-input keluarga-field">
                             </div>
                             <div class="col-md-2">
                                 <label>Hubungan</label>
-                                <input type="text" name="hubungan_keluarga" class="form-control required-input">
+                                <select name="hubungan_keluarga" id="hubungan_keluarga" class="form-control required-input keluarga-field">
+                                    <option value="">-- Pilih Hubungan --</option>
+                                    <option value="Ayah">Ayah</option>
+                                    <option value="Ibu">Ibu</option>
+                                    <option value="Saudara">Saudara</option>
+                                    <option value="SuamiIstri">Suami/Istri</option>
+                                    <option value="Anak">Anak</option>
+                                </select>
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Lahir</label>
-                                <input type="date" name="tgl_lahir_keluarga" class="form-control required-input">
+                                <input type="text" id="tgl_lahir_keluarga" name="tgl_lahir_keluarga" class="form-control required-input keluarga-field" placeholder="Pilih tanggal">
                             </div>
                             <div class="col-md-5">
                                 <label>Alamat</label>
-                                <textarea name="alamat_keluarga" id="alamat_keluarga" cols="1" rows="1" class="form-control required-input"></textarea>
+                                <textarea name="alamat_keluarga" id="alamat_keluarga" cols="1" rows="1" class="form-control required-input keluarga-field"></textarea>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="addKeluarga" class="btn btn-primary btn-sm" style="display:none;">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3" id="keluargaTableContainer" style="display: none;">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="keluargaTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>Hubungan</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Alamat</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <input type="hidden" name="keluarga_list" id="keluarga_list">
                     </div>
                 </div>
                 <div class="tab-pane" id="tab-5">
-                    <div class="card p-4">
-                        <div class="mb-3">
-                            <label>Pengalaman</label>
-                            <input type="text" name="kelurahan" class="form-control required-input">
+                    <div class="card p-2">
+                        <div class="row mb-3">
+                            <p><i style="color: brown; font-size: 8pt;">Masukan data dari pengalaman terakhir bekerja anda</i></p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Nama Perusahaan</label>
+                                    <input type="text" id="nama_perusahaan" name="nama_perusahaan" class="form-control required-input pengalaman-field">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Bagian</label>
+                                    <input type="text" id="bagian" name="bagian" class="form-control required-input pengalaman-field">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Jabatan</label>
+                                    <input type="text" id="jabatan" name="jabatan" class="form-control required-input pengalaman-field">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Periode Kerja</label>
+                                    <div class="input-group">
+                                        <div class="col-md-6">
+                                            <input type="month" id="periode_awal_kerja" name="periode_awal_kerja" class="form-control required-input pengalaman-field">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="month" id="periode_akhir_kerja" name="periode_akhir_kerja" class="form-control required-input pengalaman-field">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <label>Alasan Keluar</label>
+                                    <input type="text" id="alasan_out" name="alasan_out" class="form-control required-input pengalaman-field">
+                                </div>
+                            </div>                            
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="addPengalamanBtn" class="btn btn-primary btn-sm" style="display:none;">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3" id="pengalamanTableContainer" style="display: none;">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="pengalamanTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Perusahaan</th>
+                                            <th>Bagian</th>
+                                            <th>Jabatan</th>
+                                            <th>Periode Bekerja</th>
+                                            <th>Alasan Keluar</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <input type="hidden" name="pengalaman_list" id="pengalaman_list">
                     </div>
                 </div>
                 <div class="tab-pane" id="tab-6">
@@ -357,7 +480,7 @@
             checkSaveVisibility();
 
             if (typeof flatpickr !== 'undefined') {
-                flatpickr("#tgl_lahir", {
+                flatpickr("#tgl_lahir, #tgl_lahir_keluarga", {
                     dateFormat: "d-m-Y",
                     altInput: true,
                     altFormat: "d-m-Y",
@@ -369,6 +492,8 @@
                 console.error("Flatpickr belum dimuat.");
             }
         });
+
+        // ================================================================= BIODATA ========================================================== \\
 
         $(document).ready(function () {
             $('#nik_ktp').on('input', function () {
@@ -409,6 +534,8 @@
                     warningEl.hide();
                 }
             });
+
+            // ================================================================= ALAMAT ========================================================== \\
 
             $('.select2').select2({
                 dropdownParent: $('body'),
@@ -576,7 +703,6 @@
             });
         }
 
-
         function addNewData(selector, placeholder, url = null) {
             $(selector).select2({
                 dropdownParent: $('body'),
@@ -645,6 +771,203 @@
         addNewData('#kelurahan', 'Kelurahan', '/api/kelurahan/add');
         addNewData('#kecamatan_dom', 'Kecamatan', '/api/kecamatan/add');
         addNewData('#kelurahan_dom', 'Kelurahan', '/api/kelurahan/add');
+
+        // ================================================================= PENDIDIKAN ========================================================== \\
+
+        let pendidikanData = [];
+
+        $('.pendidikan-field').on('input change', function() {
+            let allFilled = true;
+            $('.pendidikan-field').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                $('#addPendidikanBtn').show();
+            } else {
+                $('#addPendidikanBtn').hide();
+            }
+        });
+
+        $('#addPendidikanBtn').click(function() {
+            let nama_sekolah = $('#nama_sekolah').val().trim();
+            let jurusan = $('#jurusan').val().trim();
+            let periode_awal = $('#periode_awal').val();
+            let periode_akhir = $('#periode_akhir').val();
+
+            function formatPeriode(val) {
+                if (!val) return '';
+                let date = new Date(val + "-01");
+                return date.toLocaleString('default', { month: 'short', year: 'numeric' }).toUpperCase();
+            }
+
+            let periodeFormatted = formatPeriode(periode_awal) + " / " + formatPeriode(periode_akhir);
+            let berijazah = $('#berijazah').val();
+
+            let rowData = { nama_sekolah, jurusan, periode: periodeFormatted, berijazah };
+            pendidikanData.push(rowData);
+
+            $('#pendidikan_list').val(JSON.stringify(pendidikanData));
+
+            $('#pendidikanTableContainer').show();
+
+            $('#pendidikanTable tbody').append(`
+                <tr>
+                    <td>${nama_sekolah}</td>
+                    <td>${jurusan}</td>
+                    <td>${periodeFormatted}</td>
+                    <td>${berijazah}</td>
+                    <td><i class="fa-solid fa-delete-left btn-delete text-danger" title="Delete" style="cursor:pointer;"></i></td>
+                </tr>
+            `);
+
+            $('.pendidikan-field').val('');
+            $('#addPendidikanBtn').hide();
+        });
+
+        $(document).on('click', '.btn-delete', function() {
+            let rowIndex = $(this).closest('tr').index();
+            pendidikanData.splice(rowIndex, 1);
+
+            $('#pendidikan_list').val(JSON.stringify(pendidikanData));
+
+            $(this).closest('tr').remove();
+
+            if (pendidikanData.length === 0) {
+                $('#pendidikanTableContainer').hide();
+            }
+        });
+
+        // ================================================================= KELUARGA ========================================================== \\
+
+        let keluargaData = [];
+
+        $('.keluarga-field').on('input change', function() {
+            let allFilled = true;
+            $('.keluarga-field').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                $('#addKeluarga').show();
+            } else {
+                $('#addKeluarga').hide();
+            }
+        });
+
+        $('#addKeluarga').click(function() {
+            let nama_keluarga       = $('#nama_keluarga').val().trim();
+            let hubungan_keluarga   = $('#hubungan_keluarga').val();
+            let tgl_lahir_keluarga  = $('#tgl_lahir_keluarga').val().trim();
+            let alamat_keluarga     = $('#alamat_keluarga').val().trim();
+
+            let rowData = { nama_keluarga, hubungan_keluarga, tgl_lahir_keluarga, alamat_keluarga };
+            keluargaData.push(rowData);
+
+            $('#keluarga_list').val(JSON.stringify(keluargaData));
+
+            $('#keluargaTableContainer').show();
+
+            $('#keluargaTable tbody').append(`
+                <tr>
+                    <td>${nama_keluarga}</td>
+                    <td>${hubungan_keluarga}</td>
+                    <td>${tgl_lahir_keluarga}</td>
+                    <td>${alamat_keluarga}</td>
+                    <td><i class="fa-solid fa-delete-left btn-hapus text-danger" title="Delete" style="cursor:pointer;"></i></td>
+                </tr>
+            `);
+
+            $('.keluarga-field').val('');
+            $('#addKeluarga').hide();
+        });
+
+        $(document).on('click', '.btn-hapus', function() {
+            let rowIndex = $(this).closest('tr').index();
+            keluargaData.splice(rowIndex, 1);
+
+            $('#keluarga_list').val(JSON.stringify(keluargaData));
+
+            $(this).closest('tr').remove();
+
+            if (keluargaData.length === 0) {
+                $('#keluargaTableContainer').hide();
+            }
+        });
+
+        // ================================================================= PENGALAMAN ========================================================== \\
+
+        let pengalamanData = [];
+
+        $('.pengalaman-field').on('input change', function() {
+            let allFilled = true;
+            $('.pengalaman-field').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                $('#addPengalamanBtn').show();
+            } else {
+                $('#addPengalamanBtn').hide();
+            }
+        });
+
+        $('#addPengalamanBtn').click(function() {
+            let nama_perusahaan = $('#nama_perusahaan').val().trim();
+            let bagian = $('#bagian').val().trim();
+            let jabatan = $('#jabatan').val().trim();
+            let periode_awal_kerja = $('#periode_awal_kerja').val();
+            let periode_akhir_kerja = $('#periode_akhir_kerja').val();
+
+            function formatPeriode(val) {
+                if (!val) return '';
+                let date = new Date(val + "-01");
+                return date.toLocaleString('default', { month: 'short', year: 'numeric' }).toUpperCase();
+            }
+
+            let periodeKerja = formatPeriode(periode_awal_kerja) + " / " + formatPeriode(periode_akhir_kerja);
+            let alasan_out = $('#alasan_out').val().trim();
+
+            let rowData = { nama_perusahaan, bagian, jabatan, periode: periodeKerja, alasan_out };
+            pengalamanData.push(rowData);
+
+            $('#pengalaman_list').val(JSON.stringify(pengalamanData));
+
+            $('#pengalamanTableContainer').show();
+
+            $('#pengalamanTable tbody').append(`
+                <tr>
+                    <td>${nama_perusahaan}</td>
+                    <td>${bagian}</td>
+                    <td>${jabatan}</td>
+                    <td>${periodeKerja}</td>
+                    <td>${alasan_out}</td>
+                    <td><i class="fa-solid fa-delete-left btn-delete-kerja text-danger" title="Delete" style="cursor:pointer;"></i></td>
+                </tr>
+            `);
+
+            $('.pengalaman-field').val('');
+            $('#addPengalamanBtn').hide();
+        });
+
+        $(document).on('click', '.btn-delete-kerja', function() {
+            let rowIndex = $(this).closest('tr').index();
+            pengalamanData.splice(rowIndex, 1);
+
+            $('#pengalaman_list').val(JSON.stringify(pengalamanData));
+
+            $(this).closest('tr').remove();
+
+            if (pengalamanData.length === 0) {
+                $('#pengalamanTableContainer').hide();
+            }
+        });
     </script>
 
 @endpush
