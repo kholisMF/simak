@@ -420,8 +420,34 @@
                 <div class="tab-pane" id="tab-7">
                     <div class="card p-4">
                         <div class="mb-3">
-                            <label>Dokumen</label>
-                            <input type="text" name="kelurahan" class="form-control required-input">
+                            <label>Foto (JPG/PNG, 20KB - 1MB)</label>
+                            <input type="file" id="foto_karyawan" name="foto_karyawan" accept="image/jpeg,image/png" class="form-control required-input">
+                            <div id="preview_foto" class="mt-2"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Ijazah (PDF, max 500KB)</label>
+                            <input type="file" id="ijazah" name="ijazah" accept="application/pdf" class="form-control required-input">
+                            <div id="preview_ijazah" class="mt-2"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>KTP (PDF, max 500KB)</label>
+                            <input type="file" id="ktp" name="ktp" accept="application/pdf" class="form-control required-input">
+                            <div id="preview_ktp" class="mt-2"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>CV (PDF, max 500KB)</label>
+                            <input type="file" id="cv" name="cv" accept="application/pdf" class="form-control required-input">
+                            <div id="preview_cv" class="mt-2"></div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="filePreviewModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modalContent" style="text-align:center;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1066,6 +1092,79 @@
                 $('#kondarTableContainer').hide();
             }
         });
+
+        // ================================================================= DOCUMENT ========================================================== \\
+
+        // Event handler
+        document.getElementById("foto_karyawan").addEventListener("change", function() {
+            showPreview(this, "image", "preview_foto");
+        });
+
+        document.getElementById("ijazah").addEventListener("change", function() {
+            showPreview(this, "pdf", "preview_ijazah");
+        });
+
+        document.getElementById("ktp").addEventListener("change", function() {
+            showPreview(this, "pdf", "preview_ktp");
+        });
+
+        document.getElementById("cv").addEventListener("change", function() {
+            showPreview(this, "pdf", "preview_cv");
+        });
+
+        // Function
+        function bytesToKB(bytes) {
+            return (bytes / 1024).toFixed(2);
+        }
+
+        function openModalImage(src) {
+            document.getElementById("modalContent").innerHTML = `<img src="${src}" class="img-fluid">`;
+            new bootstrap.Modal(document.getElementById('filePreviewModal')).show();
+        }
+
+        function openModalPDF(src) {
+            document.getElementById("modalContent").innerHTML = `<embed src="${src}" type="application/pdf" width="100%" height="600px">`;
+            new bootstrap.Modal(document.getElementById('filePreviewModal')).show();
+        }
+
+        function showPreview(input, type, previewId) {
+            let file = input.files[0];
+            if (!file) return;
+
+            let fileSizeKB = file.size / 1024;
+
+            if (type === "image") {
+                if (fileSizeKB < 20 || fileSizeKB > 1024) {
+                    alert("Ukuran foto harus antara 20KB - 1MB");
+                    input.value = "";
+                    return;
+                }
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewId).innerHTML = `
+                        <img src="${e.target.result}" class="img-thumbnail" style="max-width:150px; cursor:pointer;" 
+                            onclick="openModalImage('${e.target.result}')">
+                    `;
+                }
+                reader.readAsDataURL(file);
+
+            } else if (type === "pdf") {
+                if (fileSizeKB > 500) {
+                    alert("Ukuran PDF maksimal 500KB");
+                    input.value = "";
+                    return;
+                }
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewId).innerHTML = `
+                        <div style="cursor:pointer; color:blue;" onclick="openModalPDF('${e.target.result}')">
+                            <i class="fa fa-file-pdf-o fa-2x text-danger"></i> ${file.name}
+                        </div>
+                    `;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 
 @endpush
